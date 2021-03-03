@@ -20,13 +20,13 @@ end
 
 
 describe DockingStation do
-  it {  expect(DockingStation.new).to respond_to :release_bike }
+	alias_method :dock, :subject
+
+  it {  expect(dock).to respond_to :release_bike }
+  it 'releases a bike' do
+    expect(dock.release_bike).to be_instance_of Bike
+  end
+	it 'docks a bike' do
+		expect(dock).to respond_to(:return_bike).with(1).argument
+	end
 end
-
-describe DockingStation do
-  it 'releases a bike' do 
-    expect(DockingStation.new.release_bike).to be_instance_of Bike
-  end 
-end 
-
-
