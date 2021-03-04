@@ -45,25 +45,21 @@ describe DockingStation do
 	    expect(dock).to respond_to(:return_bike).with(1).argument
     end
 
-    it 'raises an error when dock full' do
-      bike_1 = Bike.new
-      bike_2 = Bike.new 
-      dock.return_bike(bike_1)
-      expect { dock.return_bike(bike_2) }.to raise_error 'No space for bikes'
+
+    it 'raises an error when dock is full' do
+      dock.return_bike(Bike.new)
+      expect { DockingStation::DEFAULT_CAPACITY.times do
+         dock.return_bike Bike.new 
+      end }.to raise_error 'Dock Full'
     end
 
-#    it 'raises an error when dock full' do
-#      dock.return_bike(Bike.new)
-#      expect { dock.return_bike Bike.new }.to raise_error 'No space for bikes'
-#    end
+    # it 'raises an error when dock full' do
+    #   bike_1 = Bike.new
+    #   bike_2 = Bike.new 
+    #   dock.return_bike(bike_1)
+    #   expect { dock.return_bike bike_2 }.to raise_error 'No space for bikes'
+    # end
   end
 end
 
-# syntax issue:
 
-# whats the difference between below and above to me they feel the same? 
-
-#  it 'raises an error when dock full' do
-#     dock.return_bike(Bike.new)
-#      expect { dock.return_bike(Bike.new).return_bike(Bike.new) }.to raise_error 'No space for bikes'
-#    end
