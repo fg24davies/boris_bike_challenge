@@ -7,14 +7,12 @@ attr_reader :docking_station, :bike
   end
 
   def release_bike
-      if @docking_station.empty?
-        raise "No bikes"
-      else
-  	    @docking_station.last
-      end
+    raise "No bikes" if @docking_station.empty?
+  	@docking_station.last
   end
 
   def return_bike(bike)
+    raise "No space for bikes"  if !@docking_station.empty?
     @docking_station << bike
   end
 
