@@ -2,12 +2,12 @@
 # a collection is an Array or a Hash 
 class DockingStation
 
-  attr_reader :docking_station
+  attr_reader :docking_station, :capacity
   DEFAULT_CAPACITY = 20
 
-  def initialize
+  def initialize(capacity = DEFAULT_CAPACITY)
     @docking_station = []
-  #  @DEFAULT_CAPACITY = 20
+    @capacity = capacity
   end
 
   def release_bike
@@ -16,7 +16,7 @@ class DockingStation
   end
 
   def return_bike(bike)
-    raise "Dock Full"  if full?
+    raise "Dock Full" if full?
     @docking_station << bike
   end
 
@@ -27,13 +27,15 @@ class DockingStation
   private 
 
   def full?
-    @docking_station.count >= DEFAULT_CAPACITY
+    @docking_station.count >= capacity
   end 
 
   def empty?
     @docking_station.empty?
   end
 end
+
+
 
 
 # don't want @variable defined in the class? 

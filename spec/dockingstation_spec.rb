@@ -21,10 +21,17 @@ end
 describe DockingStation do
   alias_method :dock, :subject
 
-  it {  expect(dock).to respond_to :release_bike }
-  
-  it 'cannot release bike' do
-  	expect { dock.release_bike }.to raise_error
+  context 'creating a new instance of DockingStation with an argument of 30' do
+    capacity_test = DockingStation.new(30)
+    it 'takes an argument to alter the default capacity' do 
+      expect(capacity_test.capacity).to eq(30)
+    end
+  end 
+
+  it { expect(dock).to respond_to :release_bike }
+
+  it 'has a default capacity when no argument passed' do
+    expect(dock.capacity).to eq DockingStation::DEFAULT_CAPACITY
   end
 
   describe '#release_bike' do
@@ -52,14 +59,9 @@ describe DockingStation do
          dock.return_bike Bike.new 
       end }.to raise_error 'Dock Full'
     end
-
-    # it 'raises an error when dock full' do
-    #   bike_1 = Bike.new
-    #   bike_2 = Bike.new 
-    #   dock.return_bike(bike_1)
-    #   expect { dock.return_bike bike_2 }.to raise_error 'No space for bikes'
-    # end
   end
 end
 
+
+# classname::constantname -- to use constants in rspec
 
