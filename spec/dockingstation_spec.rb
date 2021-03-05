@@ -6,21 +6,10 @@ require 'dockingstation'
 #	end
 # end
 
-describe Bike do
-alias_method :bike, :subject
-
-	it 'is of class Bike' do
-	  expect(bike).to be_instance_of Bike
-	end
-	it 'working?' do
-  	  expect(bike).to be_working
-    end
-end
-
-
 describe DockingStation do
   alias_method :dock, :subject
 
+  # challenge 17
   context 'creating a new instance of DockingStation with an argument of 30' do
     capacity_test = DockingStation.new(30)
     it 'takes an argument to alter the default capacity' do 
@@ -34,11 +23,24 @@ describe DockingStation do
     expect(dock.capacity).to eq DockingStation::DEFAULT_CAPACITY
   end
 
+  # challenge 18
   describe '#release_bike' do
-    it 'releases a bike' do
-      bike = Bike.new
-      dock.return_bike(bike)
-      expect(dock.release_bike).to eq bike
+    it 'releases a working bike' do
+      dock.return_bike(Bike.new)
+      expect(dock.release_bike.status).to eq true
+    end
+  
+
+  # challenge 18
+    it 'does not release broken bikes' do  
+      # array = Array.new(6, Bike.new ) + Array.new(6, Bike.new(false))
+      # test_station = DockingStation.new
+      # test_station.docking_station = array
+      dock.return_bike(Bike.new(false))
+      dock.return_bike(Bike.new)
+      dock.docking_station.count.times do
+        expect(dock.release_bike.status).to eq true
+      end 
     end
 
     it 'raises an error when no bikes' do
@@ -47,7 +49,7 @@ describe DockingStation do
   end
 
 
-  describe '#dock' do   
+  describe '#release_bike' do   
     it 'docks a bike' do
 	    expect(dock).to respond_to(:return_bike).with(1).argument
     end
